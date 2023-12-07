@@ -4,6 +4,12 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import ru.tinkoff.qa.hibernate.BeforeCreator;
 
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static ru.tinkoff.qa.hibernate.service.DbService.*;
+
 public class ZooHibernateTests {
 
     @BeforeAll
@@ -16,7 +22,8 @@ public class ZooHibernateTests {
      */
     @Test
     public void countRowAnimal() {
-        assert false;
+        long countOfRows = countRows("Animal");
+        assertEquals(10, countOfRows, "Count rows in table 'Animal'");
     }
 
     /**
@@ -24,7 +31,8 @@ public class ZooHibernateTests {
      */
     @Test
     public void insertIndexAnimal() {
-        assert false;
+        boolean canInsertInRange = canInsertInRange(1, 10);
+        assertFalse(canInsertInRange, "Unable to insert rows into the Animal table with indices from 1 to 10");
     }
 
     /**
@@ -32,7 +40,8 @@ public class ZooHibernateTests {
      */
     @Test
     public void insertNullToWorkman() {
-        assert false;
+        boolean canInsertNullName = insertIntoWorkmanFieldWithNull(null, 1,5,142);
+        assertFalse(canInsertNullName, "Unable to insert a row with name = null into the Workman table");
     }
 
     /**
@@ -40,7 +49,9 @@ public class ZooHibernateTests {
      */
     @Test
     public void insertPlacesCountRow() {
-        assert false;
+        insertInPlace("New-York", 53, 6);
+        long countOfRows = countRows("Place");
+        assertEquals(6, countOfRows, "Count rows in table 'Place'");
     }
 
     /**
@@ -48,6 +59,8 @@ public class ZooHibernateTests {
      */
     @Test
     public void countRowZoo() {
-        assert false;
+        List<String> zooNames = getZooNames();
+        List<String> expectedZooNames =  List.of("Центральный", "Северный", "Западный");
+        assertEquals(expectedZooNames, zooNames);
     }
 }
